@@ -30,13 +30,11 @@ gulp.task("sass",function(){
 	.pipe(gulp.dest("dist/css"))
 })
 gulp.task("images",function(){
-	return gulp.src("src/imgw/**/*.{png,jpg,gif,svg}")
-	.pipe(imagemin({
+	return gulp.src("src/img/**/*.{png,jpg,gif,svg}").pipe(imagemin({
 		progressive:true,
 		svgoPlugins:[{removeViewBox:false}],
 		use:[pngquant()]
-	}))
-	.pipe(gulp.dest('dist/images'))
+	})).pipe(gulp.dest('dist/img'))
 })
 gulp.task("watch",function(){
 	gulp.watch("*.html")
