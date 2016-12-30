@@ -1,4 +1,4 @@
-define(["app/ajax","app/dom"],function(a,b){
+define(["app/util/ajax","app/controller/main/dom"],function(a,b){
 	a.baseURL = "http://localhost:4000";
 	var href = location.href
 		href = href.split("?")[1].split("&");
@@ -11,6 +11,7 @@ define(["app/ajax","app/dom"],function(a,b){
 		a.request("get","/at/shop/"+con["index"]+"?"+"num="+con["num"],null,b.fun);
 		a.request("get","/at/shop/"+con["form"],null,b.fn);
 		window.suggest=function(data){
+			console.log(data)
 			var ul = document.querySelector("#seek ul");
 			var div = document.querySelector("#seek");
 			ul.remove();
@@ -26,9 +27,7 @@ define(["app/ajax","app/dom"],function(a,b){
 	var inp = document.querySelector("#search");
 	inp.oninput = function(){
 		var sc = document.querySelector("#script");
-		sc.remove();
 		var sc = document.createElement("script");
-		sc.id="script"
 		sc.src = "http://suggest.bang.360.cn/suggest?word="+
 		this.value+"&category=7&encodein=utf-8&encodeout=utf-8&format=json&callback=window.suggest&t=0.3514809920297852";
 		document.body.appendChild(sc);	

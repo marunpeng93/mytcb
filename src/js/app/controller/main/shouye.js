@@ -1,4 +1,4 @@
-define(function(){
+define(["./ditu"],function(init){
 	var obj = {};
 		this.shop=null;
 		this.uls = null;
@@ -12,13 +12,15 @@ define(function(){
 				this.lis[i].style.background = "#fff"
 			}
 		}
+		obj.num = 1;
 		obj.click = function(request){
 			var that = this;
 			for(var i = 0;i < this.lis.length;i++){
 				this.lis[i].index = i+1;
 				this.lis[i].onclick = function(){
 					that.changColor();
-					this.style.background = "#fc6621"
+					this.style.background = "#fc6621";
+					obj.num = this.index;
 					request("get","/at/shop/"+this.index,null,that.fun)
 				}
 			}
@@ -66,7 +68,7 @@ define(function(){
 				div1.appendChild(div3)
 				var a = document.createElement("a");
 				a.className = "span";
-				a.href = ob[i]["shop_addr"];
+				a.href = "http://localhost:4000/diapu.html?index="+obj.num+"&num="+i+"&form=4";
 				a.innerHTML = "进入店铺";
 				div1.appendChild(a)
 				li.appendChild(div1)
@@ -74,7 +76,7 @@ define(function(){
 				(function(x,b,c){
 					lis[i].onclick = function(){
 						var div = document.querySelectorAll(".merchant")
-						obj.init(x,ob,c)
+						init(x,ob,c)
 						for(var j = 0;j < lis.length;j++){
 							lis[j].style.backgroundColor = "#fff"
 							div[j].style.display ="none";
@@ -84,61 +86,7 @@ define(function(){
 				})([ob[i][ "map_longitude"],ob[i]["map_latitude"]],ob,i)
 			}
 			shop.appendChild(ul)
-			obj.init([ob[0][ "map_longitude"],ob[0]["map_latitude"]],ob);
-		}
-		obj.init = function(x,o,num){
-			 var map = new AMap.Map('container', {
-            	center: x,
-            	zoom: 10
-        });
-        map.plugin(["AMap.ToolBar"], function() {
-            map.addControl(new AMap.ToolBar());
-        });
-        for(var j = 0;j <o.length;j++){
-        	var div = document.createElement("div");
-        	var img = document.createElement("img");
-        	img.src = "img/qi.png"
-        	img.style.width="32px";
-        	if(j == num){
-        		img.src = "img/bj.jpg";
-        	}
-        	div.appendChild(img)
-	        var content = document.createElement('div');
-	    	content.className = 'merchant';
-	    	var p = document.createElement('p');
-	    	p.innerHTML = o[j]["shop_name"];
-	    	var span = document.createElement("span");
-	    	span.innerHTML = "×";
-	    	p.appendChild(span)
-	    	content.appendChild(p); 
-	    	var p = document.createElement('p');
-	    	p.innerHTML = "主营："+o[j]["main"];
-	    	content.appendChild(p);
-	    	var p = document.createElement('p');
-	    	p.innerHTML = "地址："+o[j]["addr"];
-	    	content.appendChild(p);
-	    	div.appendChild(content)
-	    	var a = document.createElement("a");
-	    	a.href = o[j]["shop_addr"];
-	    	a.innerHTML = '进入店铺...'
-	    	p.appendChild(a);
-	    	marker = new AMap.Marker({
-			    position: [o[j][ "map_longitude"],o[j]["map_latitude"]],
-			    title: o[j]["shop_name"],
-			    map: map,
-			    content: div
-			});
-			img.onclick = function(){
-				var div = document.querySelectorAll(".merchant");
-				for(var j = 0;j < div.length;j++){
-					div[j].style.display ="none";
-				}
-				this.parentNode.querySelector("div").style.display = "block"
-			}
-			span.onclick = function(){
-				this.parentNode.parentNode.style.display = "none"
-			}
-        	}
+			init([ob[0][ "map_longitude"],ob[0]["map_latitude"]],ob);
 		}
 		obj.mape = function(a,b){
     		document.querySelector(a).onclick = function(){

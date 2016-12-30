@@ -6,7 +6,8 @@ var gulp= require("gulp"),
 	rename = require("gulp-rename"),
 	sass = require("gulp-ruby-sass"),
 	imagemin = require("gulp-imagemin"),
-	pngquant = require("imagemin-pngquant")
+	pngquant = require("imagemin-pngquant"),
+	concat = require("gulp-concat")
 //注册任务
 gulp.task("webserver",function(){
 	gulp.src("dist").pipe(webserver({
@@ -30,13 +31,18 @@ gulp.task("sass",function(){
 	.pipe(gulp.dest("dist/css"))
 })
 gulp.task("images",function(){
-	return gulp.src("src/img/**/*.{png,jpg,gif,svg}").pipe(imagemin({
+	return gulp.src("src/img/**/*.{png,jpg,gif,svg}")/*.pipe(imagemin({
 		progressive:true,
 		svgoPlugins:[{removeViewBox:false}],
 		use:[pngquant()]
-	})).pipe(gulp.dest('dist/img'))
+	}))*/.pipe(gulp.dest('dist/img'))
+})
+gulp.task("concat",function(){
+	gulp.src("dist/js/**/*.js")
+	.pipe(concat("libs.js"))
+	.pipe(gulp.dest("dist/js"))
 })
 gulp.task("watch",function(){
-	gulp.watch("*.html")
+	gulp.watch("*.js")
 });
-gulp.task("default",["webserver","sass","images","html",'ys',"watch"]);
+gulp.task("default",["webserver","sass","concat","images","html",'ys',"watch"]);

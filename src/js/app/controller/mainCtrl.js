@@ -1,6 +1,6 @@
 
 //定义主页面控制器
-define(["./main/lunbo","./util/ajax","./main/shouye"], function(a,b,c){
+define(["./main/lunbo","../util/ajax","./main/shouye"], function(a,b,c){
 	a.star("#imgs","#lunbo li");
 	b.baseURL = "http://localhost:4000";
 	c.data("#shop","#ul li")

@@ -328,6 +328,7 @@ h4 span{
     display: inline-block;
     width: 125px;
     text-align: center;
+    cursor: pointer 
 }
 #map{
     float: right;
@@ -337,6 +338,7 @@ h4 span{
     margin-top: 10px;
     line-height: 20px;
     margin-right: 10px;
+    cursor: pointer;
 }
 h4 span:hover{
     background: #fff;
